@@ -127,17 +127,44 @@ RCT_EXPORT_MODULE()
         calendarEvent.location = location;
     }
 
-    if (startDate) {
-        calendarEvent.startDate = startDate;
-    }
-
-    if (endDate) {
-        calendarEvent.endDate = endDate;
-    }
-
     if (timeZone) {
         calendarEvent.timeZone = timeZone;
     }
+
+    if (startDate) {
+         // start date
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        // do this because all times are local to the event
+        [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        
+        NSDateComponents *componentsStartExtract = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:startDate];
+        
+        NSDateComponents *components = [[NSDateComponents alloc] init];
+        [components setDay:[componentsStartExtract day]];
+        [components setMonth:[componentsStartExtract month]];
+        [components setYear:[componentsStartExtract year]];
+        [components setHour:[componentsStartExtract hour]];
+        [components setMinute:[componentsStartExtract minute]];
+        [components setSecond:[componentsStartExtract second]];
+        [components setTimeZone:timeZone];
+        NSDate *_date = [calendar dateFromComponents:components];
+        
+        
+        calendarEvent.startDate = _date;
+
+        //calendarEvent.startDate = startDate;
+
+        // end data
+        NSDate *endDate = [_date dateByAddingTimeInterval:(20 * 60)]; // 30 mins .. TODO
+        calendarEvent.endDate = endDate;
+
+    }
+
+    if (endDate) {
+       // calendarEvent.endDate = endDate;
+    }
+
+    
 
     if (allDay) {
         calendarEvent.allDay = [allDay boolValue];

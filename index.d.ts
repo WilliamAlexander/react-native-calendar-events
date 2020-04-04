@@ -97,6 +97,8 @@ interface CalendarEventBase {
   description?: string;
   /** The timezone associated with the calendar event. */
   timeZone : string;
+
+  endTimeZone : string;
 }
 
 export interface CalendarEventReadable extends CalendarEventBase {

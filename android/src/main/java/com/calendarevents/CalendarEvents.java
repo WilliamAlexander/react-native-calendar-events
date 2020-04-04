@@ -439,7 +439,12 @@ public class CalendarEvents extends ReactContextBaseJavaModule {
         if(details.hasKey("skipAndroidTimezone") && details.getBoolean("skipAndroidTimezone")){
             skipTimezone = true;
         }
-        if(!skipTimezone){
+        //if(!skipTimezone){
+        //    sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        //}
+        if (details.hasKey("timeZone")) {
+            sdf.setTimeZone(TimeZone.getTimeZone(details.getString("timeZone")));
+        } else {
             sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         }
         ContentResolver cr = reactContext.getContentResolver();

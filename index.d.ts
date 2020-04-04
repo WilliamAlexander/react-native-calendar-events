@@ -96,7 +96,7 @@ interface CalendarEventBase {
   /** ANDROID ONLY - The description associated with the calendar event. */
   description?: string;
   /** The timezone associated with the calendar event. */
-  timezone : string;
+  timeZone : string;
 }
 
 export interface CalendarEventReadable extends CalendarEventBase {

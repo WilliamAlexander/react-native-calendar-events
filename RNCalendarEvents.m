@@ -499,7 +499,7 @@ RCT_EXPORT_MODULE()
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:_timeZone];
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
-    [dateFormatter setDateFormat: @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z"];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd'T'HH:mm:ss"];
 
 
     NSMutableDictionary *formedCalendarEvent = [NSMutableDictionary dictionaryWithDictionary:emptyCalendarEvent];

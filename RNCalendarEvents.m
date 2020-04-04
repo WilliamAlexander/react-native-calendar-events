@@ -621,7 +621,25 @@ RCT_EXPORT_MODULE()
             } else if (alarm.relativeOffset) {
                 NSDate *calendarEventStartDate = nil;
                 if (event.startDate) {
-                    calendarEventStartDate = event.startDate;
+                     // start date
+                    NSCalendar *calendar = [NSCalendar currentCalendar];
+                    // do this because all times are local to the event
+                    [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+                    
+                    NSDateComponents *componentsStartExtract = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:event.startDate];
+                    
+                    NSDateComponents *components = [[NSDateComponents alloc] init];
+                    [components setDay:[componentsStartExtract day]];
+                    [components setMonth:[componentsStartExtract month]];
+                    [components setYear:[componentsStartExtract year]];
+                    [components setHour:[componentsStartExtract hour]];
+                    [components setMinute:[componentsStartExtract minute]];
+                    [components setSecond:[componentsStartExtract second]];
+                    [components setTimeZone:event.timeZone];
+                    NSDate *_date = [calendar dateFromComponents:components];
+        
+                    calendarEventStartDate = _date;
+                    //calendarEventStartDate = event.startDate;
                 } else {
                     calendarEventStartDate = [NSDate date];
                 }

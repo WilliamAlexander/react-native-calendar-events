@@ -108,7 +108,7 @@ RCT_EXPORT_MODULE()
     } else {
         calendarEvent = [EKEvent eventWithEventStore:self.eventStore];
         calendarEvent.calendar = [self.eventStore defaultCalendarForNewEvents];
-        calendarEvent.timeZone = [NSTimeZone defaultTimeZone];
+        calendarEvent.timeZone = timeZone;//[NSTimeZone defaultTimeZone];
 
         if (calendarId) {
             EKCalendar *calendar = [self.eventStore calendarWithIdentifier:calendarId];
@@ -496,7 +496,7 @@ RCT_EXPORT_MODULE()
                                          };
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:_timeZone];
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
     [dateFormatter setDateFormat: @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z"];
@@ -520,6 +520,11 @@ RCT_EXPORT_MODULE()
                                forKey:@"calendar"];
     }
 
+
+    if (event.timeZone) {
+        [formedCalendarEvent setValue:event.timeZone forKey:_timeZone];
+    }
+    
     if (event.title) {
         [formedCalendarEvent setValue:event.title forKey:_title];
     }
